@@ -19,113 +19,94 @@
             --text-main: #0f172a; --text-sub: #64748b; --border: #cbd5e1;
             --accent: #2563eb; --success: #059669; --danger: #dc2626; --warning: #d97706;
         }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-primary); margin: 0; padding: 20px; color: var(--text-main); transition: background 0.3s; }
-        .container { max-width: 1400px; margin: auto; display: none; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-primary); margin: 0; padding: 15px; color: var(--text-main); transition: background 0.3s; }
+        .container { max-width: 1600px; margin: auto; display: none; }
         
         #loginScreen { position: fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at top right, #1e3a8a, var(--bg-primary)); display: flex; justify-content: center; align-items: center; z-index: 9999; }
         .login-card { background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px); padding: 40px; border-radius: 20px; text-align: center; width: 320px; border: 1px solid rgba(255,255,255,0.1); }
         .login-card input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid var(--border); background: #1e293b; border-radius: 8px; box-sizing: border-box; color: white; text-align: center; font-size: 20px; letter-spacing: 4px; font-weight: bold; }
         
-        header { background: linear-gradient(135deg, #1e40af, var(--accent)); color: white; padding: 25px 30px; border-radius: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        header { background: linear-gradient(135deg, #1e40af, var(--accent)); color: white; padding: 20px 25px; border-radius: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .header-btns { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         
         .year-selector-box { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.25); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
         .year-selector-box select { background: transparent; color: white; border: none; font-weight: 800; font-size: 15px; cursor: pointer; outline: none; }
         .year-selector-box select option { background: #1e293b; color: white; }
 
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 25px; }
-        .stat-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-        .stat-card h3 { margin: 0; font-size: 13px; color: var(--text-sub); text-transform: uppercase; }
-        .stat-card p { margin: 10px 0 0; font-size: 24px; font-weight: 800; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: var(--bg-card); padding: 18px; border-radius: 16px; border: 1px solid var(--border); }
+        .stat-card h3 { margin: 0; font-size: 12px; color: var(--text-sub); text-transform: uppercase; }
+        .stat-card p { margin: 8px 0 0; font-size: 22px; font-weight: 800; }
 
-        .kadus-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .kadus-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         @media (max-width: 768px) { .kadus-summary-grid { grid-template-columns: 1fr; } }
-        .kadus-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-        .kadus-box h4 { margin: 0 0 12px 0; color: var(--accent); font-size: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; justify-content: space-between; }
-        .progress-bar-container { background: var(--bg-input); border-radius: 8px; height: 10px; width: 100%; margin: 10px 0; overflow: hidden; }
+        .kadus-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+        .kadus-box h4 { margin: 0 0 10px 0; color: var(--accent); font-size: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-bar-container { background: var(--bg-input); border-radius: 8px; height: 10px; width: 100%; margin: 8px 0; overflow: hidden; }
         .progress-bar { background: var(--success); height: 100%; width: 0%; transition: width 0.5s ease; }
 
-        .grid-main { display: grid; grid-template-columns: 1fr 1.8fr; gap: 25px; }
-        @media (max-width: 960px) { .grid-main { grid-template-columns: 1fr; } }
+        /* GRID UTAMA 2 KOLOM: FORM INPUT | DATA PEMBAYARAN & SUDAH SETOR */
+        .grid-main { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
+        @media (max-width: 1000px) { .grid-main { grid-template-columns: 1fr; } }
         
-        .card { background: var(--bg-card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 25px; }
-        .form-title { font-size: 18px; font-weight: bold; border-left: 5px solid var(--accent); padding-left: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .card { background: var(--bg-card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .form-title { font-size: 16px; font-weight: bold; border-left: 5px solid var(--accent); padding-left: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
         
-        .nop-group { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
-        .nop-group input { border: none; padding: 12px; flex: 1; font-weight: bold; font-size: 20px; text-align: center; outline: none; background: transparent; color: var(--text-main); }
+        .nop-group { display: flex; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+        .nop-group input { border: none; padding: 10px; flex: 1; font-weight: bold; font-size: 18px; text-align: center; outline: none; background: transparent; color: var(--text-main); }
         
-        .display-input, .input-field { padding: 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 15px; margin-bottom: 15px; background: var(--bg-primary); font-weight: bold; color: var(--text-main); }
+        .display-input, .input-field { padding: 10px; border: 1px solid var(--border); border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 14px; margin-bottom: 12px; background: var(--bg-primary); font-weight: bold; color: var(--text-main); }
 
-        .kadus-quick-btns { display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-kadus-toggle { flex: 1; padding: 10px; border: 2px solid var(--border); background: var(--bg-input); color: var(--text-main); font-weight: bold; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.2s; font-size: 13px; }
+        .kadus-quick-btns { display: flex; gap: 10px; margin-bottom: 12px; }
+        .btn-kadus-toggle { flex: 1; padding: 9px; border: 2px solid var(--border); background: var(--bg-input); color: var(--text-main); font-weight: bold; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.2s; font-size: 12px; }
         .btn-kadus-toggle.active { border-color: var(--accent); background: var(--accent); color: white; }
 
-        .filter-select, .search-input { padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-main); box-sizing: border-box; }
+        .filter-select, .search-input { padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-main); box-sizing: border-box; font-size: 13px; }
         .filter-select { font-weight: bold; cursor: pointer; }
-        .search-input { flex: 1; min-width: 180px; }
+        .search-input { flex: 1; min-width: 140px; }
 
-        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: inline-block; }
+        .badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; display: inline-block; }
         .badge-lunas { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
         .badge-kadus { background: rgba(59, 130, 246, 0.15); color: var(--accent); border: 1px solid var(--accent); }
         .badge-tahun { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); font-size: 11px; padding: 2px 8px; border-radius: 6px; }
 
-        .btn { padding: 10px 18px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
-        .btn-save { background: var(--success); color: white; width: 100%; padding: 14px; font-size: 16px; justify-content: center; }
-        .btn-add { background: var(--accent); color: white; width: 100%; padding: 12px; font-size: 14px; justify-content: center; margin-bottom: 15px; }
+        .btn { padding: 9px 14px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
+        .btn-save { background: var(--success); color: white; width: 100%; padding: 13px; font-size: 14px; justify-content: center; }
+        .btn-add { background: var(--accent); color: white; width: 100%; padding: 11px; font-size: 13px; justify-content: center; }
         .btn-theme { background: rgba(255,255,255,0.2); color: white; }
         .btn-logout { background: rgba(239, 68, 68, 0.2); color: white; }
         .btn-print { background: var(--border); color: var(--text-main); }
         .btn-excel { background: #15803d; color: white; }
-        .btn-receipt { background: var(--accent); color: white; padding: 5px 10px; font-size: 11px; }
-        .btn-delete { background: var(--danger); color: white; padding: 5px 10px; font-size: 11px; }
+        .btn-receipt { background: var(--accent); color: white; padding: 5px 8px; font-size: 11px; }
+        .btn-delete { background: var(--danger); color: white; padding: 5px 8px; font-size: 11px; }
 
-        .cart-list { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 15px; max-height: 180px; overflow-y: auto; }
+        .cart-list { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 8px; margin-bottom: 12px; max-height: 160px; overflow-y: auto; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 12px; }
         .cart-item:last-child { border-bottom: none; }
 
-        table { width:100%; border-collapse:collapse; margin-top: 10px; }
-        th { background: var(--bg-input); color: var(--text-sub); text-align: left; padding: 12px; font-size: 12px; }
-        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-main); }
+        .table-wrapper { overflow-x: auto; max-height: 450px; overflow-y: auto; }
+        table { width:100%; border-collapse:collapse; margin-top: 5px; }
+        th { background: var(--bg-input); color: var(--text-sub); text-align: left; padding: 10px 8px; font-size: 11px; position: sticky; top: 0; z-index: 1; }
+        td { padding: 10px 8px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-main); }
 
-        /* MODAL & STRUK */
-        #receiptModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
+        /* MODAL / POP-UP UMUM */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
+        .modal-box { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 16px; width: 100%; max-width: 450px; box-sizing: border-box; position: relative; }
         .receipt-card { background: white; color: black; padding: 10px; border-radius: 8px; width: 270px; font-family: 'Courier New', Courier, monospace; font-size: 11px; box-sizing: border-box; }
 
-        /* PENGATURAN CETAK THERMAL AGAR TIDAK KEPOTONG DI KIRI */
         @media print {
-            @page { 
-                size: 58mm auto; 
-                margin: 0mm; 
-            }
-            body, html {
-                width: 58mm;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-            }
+            @page { size: 58mm auto; margin: 0mm; }
+            body, html { width: 58mm; margin: 0 !important; padding: 0 !important; background: white !important; }
             body * { visibility: hidden; }
             #receiptModal, #receiptModal * { visibility: visible; }
             #receiptModal { 
-                position: absolute !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 58mm !important; 
-                background: white !important; 
-                padding: 0 !important;
-                margin: 0 !important;
-                display: flex !important;
-                justify-content: flex-start !important;
-                align-items: flex-start !important;
+                position: absolute !important; left: 0 !important; top: 0 !important; width: 58mm !important; 
+                background: white !important; padding: 0 !important; margin: 0 !important; display: flex !important;
+                justify-content: flex-start !important; align-items: flex-start !important;
             }
             .receipt-card {
-                width: 56mm !important;
-                max-width: 56mm !important;
-                padding: 2mm !important;
-                margin: 0 !important;
-                background: white !important;
-                color: black !important;
-                box-shadow: none !important;
-                border: none !important;
+                width: 56mm !important; max-width: 56mm !important; padding: 2mm !important; margin: 0 !important;
+                background: white !important; color: black !important; box-shadow: none !important; border: none !important;
             }
             .no-print-modal { display: none !important; }
         }
@@ -146,12 +127,15 @@
 <div class="container" id="mainApp">
     <header>
         <div>
-            <h1 style="margin:0; font-size: 22px;">MONITORING PBB DESA SANGEN <span id="badgeTahunHeader" style="background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 8px; font-size: 16px;">2026</span></h1>
+            <h1 style="margin:0; font-size: 20px;">MONITORING PBB DESA SANGEN <span id="badgeTahunHeader" style="background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 8px; font-size: 15px;">2026</span></h1>
             <p style="margin:4px 0 0; opacity: 0.8; font-size: 12px;">Sistem Pengelolaan PBB Multi-Tahun Desa Sangen</p>
         </div>
         <div class="header-btns">
+            <!-- TOMBOL POP-UP TAMBAH MASTER WARGA -->
+            <button id="btnBukaModalMaster" class="btn" style="background: var(--warning); color: #000; font-weight: bold;">➕ Tambah / Update Master Warga</button>
+            
             <div class="year-selector-box">
-                <span style="font-size: 12px; opacity: 0.9;">📅 Tahun Pajak:</span>
+                <span style="font-size: 12px; opacity: 0.9;">📅 Tahun:</span>
                 <select id="pilihTahun">
                     <option value="2026">2026</option>
                     <option value="2027">2027</option>
@@ -160,7 +144,7 @@
                     <option value="2030">2030</option>
                 </select>
             </div>
-            <button class="btn btn-theme" id="btnTheme">🌓 Mode Tema</button>
+            <button class="btn btn-theme" id="btnTheme">🌓 Tema</button>
             <button class="btn btn-logout" id="btnLogout">🔒 Keluar</button>
         </div>
     </header>
@@ -169,7 +153,7 @@
         <div class="stat-card">
             <h3>Total Terkumpul (<span class="label-tahun">2026</span>)</h3>
             <p id="statTotalSetor" style="color: var(--success);">Rp 0</p>
-            <span id="statJumlahTransaksi" style="font-size: 12px; color: var(--text-sub);">0 Transaksi Masuk</span>
+            <span id="statJumlahTransaksi" style="font-size: 12px; color: var(--text-sub);">0 Transaksi / 0 NOP Lunas</span>
         </div>
     </div>
 
@@ -179,7 +163,7 @@
             <h4>📍 KADUS 1 <span id="persenKadus1" style="font-size: 14px; color: var(--success);">0%</span></h4>
             <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; margin-bottom: 4px;">
                 <span>Terkumpul: <b id="nominalKadus1" style="color: var(--success);">Rp 0</b></span>
-                <span>Transaksi: <b id="jumlahKadus1">0 Transaksi</b></span>
+                <span>Lunas: <b id="jumlahKadus1">0 NOP</b></span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="barKadus1"></div>
@@ -189,7 +173,7 @@
             <h4>📍 KADUS 2 <span id="persenKadus2" style="font-size: 14px; color: var(--success);">0%</span></h4>
             <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; margin-bottom: 4px;">
                 <span>Terkumpul: <b id="nominalKadus2" style="color: var(--success);">Rp 0</b></span>
-                <span>Transaksi: <b id="jumlahKadus2">0 Transaksi</b></span>
+                <span>Lunas: <b id="jumlahKadus2">0 NOP</b></span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" id="barKadus2"></div>
@@ -197,12 +181,13 @@
         </div>
     </div>
 
+    <!-- 2 KOLOM UTAMA: KIRI (FORM INPUT) | KANAN (TABEL PEMBAYARAN & SUDAH SETOR) -->
     <div class="grid-main">
+        <!-- KOLOM 1: FORM INPUT SETOR -->
         <section>
-            <!-- FORM INPUT BANYAK / KOLEKTIF -->
             <div class="card">
                 <div class="form-title">
-                    <span>INPUT SETOR BANYAK (MULTI-NOP)</span>
+                    <span>INPUT SETOR (MULTI-NOP)</span>
                     <span class="badge-tahun">Tahun <span class="label-tahun">2026</span></span>
                 </div>
                 <form id="formPBB">
@@ -211,11 +196,12 @@
 
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
                     <div class="nop-group">
-                        <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">33.08.130.022.000.</span>
+                        <span style="padding:10px; font-weight:bold; font-size:12px; color:var(--text-sub);">33.08.130.022.000.</span>
                         <input type="text" id="iNopAkhir" placeholder="0000" maxlength="4" autocomplete="off">
-                        <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">.7</span>
+                        <span style="padding:10px; font-weight:bold; font-size:12px; color:var(--text-sub);">.7</span>
                     </div>
                     <input type="hidden" id="iNopLengkap">
+                    <div id="peringatanSudahSetor" style="font-size: 11px; color: var(--danger); font-weight: bold; margin-top: -8px; margin-bottom: 10px; display: none;">⚠️ NOP ini sudah tercatat setor di tahun ini!</div>
 
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA WAJIB PAJAK (OBJEK)</label>
                     <input type="text" id="iNamaWarga" class="display-input" placeholder="Nama Wajib Pajak di NOP tersebut...">
@@ -228,91 +214,121 @@
                     <input type="hidden" id="iKadusVal" value="Kadus 1">
 
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NOMINAL TAGIHAN (RP)</label>
-                    <input type="number" id="iTagihan" class="display-input" placeholder="Masukkan Nominal Saja, Misal: 50000">
+                    <input type="number" id="iTagihan" class="display-input" placeholder="Misal: 50000">
                     
-                    <button type="button" id="btnTambahKeDaftar" class="btn" style="background: var(--warning); color: #000; width: 100%; justify-content: center; font-size: 14px; margin-bottom: 15px;">➕ TAMBAH NOP KE DAFTAR</button>
+                    <button type="button" id="btnTambahKeDaftar" class="btn" style="background: var(--warning); color: #000; width: 100%; justify-content: center; font-size: 13px; margin-bottom: 12px;">➕ TAMBAH NOP KE DAFTAR</button>
 
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">DAFTAR NOP DIPILIH (<span id="jumlahAntrean">0</span> NOP)</label>
                     <div class="cart-list" id="daftarAntrean">
                         <div style="text-align: center; color: var(--text-sub); padding: 10px; font-size: 11px;">Belum ada NOP ditambahkan</div>
                     </div>
 
-                    <div style="font-size: 14px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 15px; background: var(--bg-input); padding: 10px; border-radius: 8px;">
-                        <span>TOTAL KESELURUHAN:</span>
+                    <div style="font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 12px; background: var(--bg-input); padding: 10px; border-radius: 8px;">
+                        <span>TOTAL BAYAR:</span>
                         <span id="totalNominalAntrean" style="color: var(--success);">Rp 0</span>
                     </div>
                     
-                    <button type="submit" class="btn btn-save">💳 KONFIRMASI & SIMPAN PEMBAYARAN KOLEKTIF</button>
-                </form>
-            </div>
-
-            <div class="card">
-                <div class="form-title" style="border-color: var(--warning);">+ TAMBAH / UPDATE MASTER WARGA</div>
-                <form id="formTambahWarga">
-                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
-                    <div class="nop-group">
-                        <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">33.08.130.022.000.</span>
-                        <input type="text" id="addNopAkhir" placeholder="0000" maxlength="4" required autocomplete="off">
-                        <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">.7</span>
-                    </div>
-                    
-                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA WAJIB PAJAK</label>
-                    <input type="text" id="addNama" class="input-field" placeholder="Nama Lengkap" required>
-                    
-                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">PILIH WILAYAH KADUS</label>
-                    <div class="kadus-quick-btns">
-                        <button type="button" class="btn-kadus-toggle active" id="btnAddKadus1" onclick="setAddKadus('Kadus 1')">Kadus 1</button>
-                        <button type="button" class="btn-kadus-toggle" id="btnAddKadus2" onclick="setAddKadus('Kadus 2')">Kadus 2</button>
-                    </div>
-                    <input type="hidden" id="addKadusVal" value="Kadus 1">
-
-                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NOMINAL TAGIHAN (RP)</label>
-                    <input type="number" id="addTagihan" class="input-field" placeholder="Contoh: 50000" required>
-                    
-                    <button type="submit" class="btn btn-add">➕ SIMPAN KE MASTER WARGA</button>
+                    <button type="submit" class="btn btn-save">💳 SIMPAN SETORAN</button>
                 </form>
             </div>
         </section>
 
+        <!-- KOLOM 2: DATA PEMBAYARAN MASUK & SUDAH SETOR -->
         <section>
-            <div class="card">
+            <div class="card" style="margin-bottom: 15px;">
                 <div class="form-title">
                     <span>DATA PEMBAYARAN MASUK <span class="label-tahun">2026</span></span>
-                    <span id="totalNominalTabel" style="font-size: 13px; color: var(--success);">Rp 0</span>
+                    <span id="totalNominalTabel" style="font-size: 12px; color: var(--success);">Rp 0</span>
                 </div>
-
-                <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
                     <select id="filterKadusTabel" class="filter-select">
-                        <option value="semua">🏘️ Semua Wilayah Kadus</option>
+                        <option value="semua">🏘️ Semua Kadus</option>
                         <option value="Kadus 1">📍 Kadus 1</option>
                         <option value="Kadus 2">📍 Kadus 2</option>
                     </select>
-
-                    <input type="text" id="search" class="search-input" placeholder="🔍 Cari NOP / Nama Penyetor...">
+                    <input type="text" id="search" class="search-input" placeholder="🔍 Cari Penyetor...">
                     <button id="btnEksporExcel" class="btn btn-excel">📊 Excel</button>
-                    <button onclick="window.print()" class="btn btn-print">🖨️ Cetak</button>
                 </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>PENYETOR & INFO</th>
+                                <th>KADUS</th>
+                                <th>TOTAL</th>
+                                <th style="text-align:center;">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelUtama"></tbody>
+                    </table>
+                </div>
+            </div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>INFO NOP</th>
-                            <th>NAMA PENYETOR</th>
-                            <th>KADUS</th>
-                            <th>NOMINAL</th>
-                            <th>TANGGAL & STATUS</th>
-                            <th style="text-align:center;">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelUtama"></tbody>
-                </table>
+            <div class="card" style="border-top: 4px solid var(--success);">
+                <div class="form-title" style="border-color: var(--success);">
+                    <span>✅ RINCIAN DATA SUDAH SETOR (PER NOP)</span>
+                    <span id="totalNopLunasBadge" class="badge badge-lunas">0 NOP</span>
+                </div>
+                <div style="margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                    <select id="filterKadusSudahSetor" class="filter-select">
+                        <option value="semua">🏘️ Semua Kadus</option>
+                        <option value="Kadus 1">📍 Kadus 1</option>
+                        <option value="Kadus 2">📍 Kadus 2</option>
+                    </select>
+                    <input type="text" id="searchSudahSetor" class="search-input" placeholder="🔍 Cari NOP / Nama Wajib Pajak...">
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NOP & WAJIB PAJAK</th>
+                                <th>KADUS</th>
+                                <th>NOMINAL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelSudahSetor"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
     </div>
 </div>
 
+<!-- MODAL POP-UP TAMBAH / UPDATE MASTER WARGA -->
+<div id="modalMasterWarga" class="modal-overlay">
+    <div class="modal-box">
+        <div class="form-title" style="border-color: var(--warning); margin-bottom: 15px;">
+            <span>+ MASTER WARGA UNIVERSAL</span>
+            <button type="button" id="btnTutupModalMaster" style="background:none; border:none; color:var(--text-main); font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <form id="formTambahWarga">
+            <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
+            <div class="nop-group">
+                <span style="padding:10px; font-weight:bold; font-size:12px; color:var(--text-sub);">33.08.130.022.000.</span>
+                <input type="text" id="addNopAkhir" placeholder="0000" maxlength="4" required autocomplete="off">
+                <span style="padding:10px; font-weight:bold; font-size:12px; color:var(--text-sub);">.7</span>
+            </div>
+            
+            <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA WAJIB PAJAK</label>
+            <input type="text" id="addNama" class="input-field" placeholder="Nama Lengkap" required>
+            
+            <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">PILIH WILAYAH KADUS</label>
+            <div class="kadus-quick-btns">
+                <button type="button" class="btn-kadus-toggle active" id="btnAddKadus1" onclick="setAddKadus('Kadus 1')">Kadus 1</button>
+                <button type="button" class="btn-kadus-toggle" id="btnAddKadus2" onclick="setAddKadus('Kadus 2')">Kadus 2</button>
+            </div>
+            <input type="hidden" id="addKadusVal" value="Kadus 1">
+
+            <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NOMINAL TAGIHAN (RP)</label>
+            <input type="number" id="addTagihan" class="input-field" placeholder="Contoh: 50000" required>
+            
+            <button type="submit" class="btn btn-add">💾 SIMPAN KE MASTER WARGA</button>
+        </form>
+    </div>
+</div>
+
 <!-- MODAL STRUK KOLEKTIF -->
-<div id="receiptModal">
+<div id="receiptModal" class="modal-overlay">
     <div class="receipt-card" id="areaStruk">
         <div style="text-align:center; font-weight:bold; font-size:13px;">PEMERINTAH DESA SANGEN</div>
         <div style="text-align:center; font-size:10px; margin-bottom:6px;">BUKTI PEMBAYARAN PBB TAHUN <span id="rTahun">2026</span></div>
@@ -378,6 +394,11 @@
         document.getElementById('btnAddKadus2').classList.toggle('active', kadus === 'Kadus 2');
     };
 
+    // Kontrol Modal Master Warga
+    const modalMaster = document.getElementById('modalMasterWarga');
+    document.getElementById('btnBukaModalMaster').addEventListener('click', () => { modalMaster.style.display = 'flex'; });
+    document.getElementById('btnTutupModalMaster').addEventListener('click', () => { modalMaster.style.display = 'none'; });
+
     function muatDataLunasFirebase() {
         if (unsubscribeLunas) unsubscribeLunas();
         let namaKoleksiLunas = "pbb_lunas_" + tahunAktif;
@@ -385,6 +406,7 @@
         unsubscribeLunas = onSnapshot(collection(db, namaKoleksiLunas), (snapshot) => {
             dataLunasLokal = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             tampilkanTabel();
+            tampilkanTabelSudahSetor();
         }, (err) => console.error("PBB Lunas Error:", err));
     }
 
@@ -468,25 +490,30 @@
     document.getElementById('iNopAkhir').addEventListener('input', (e) => {
         let val = e.target.value.replace(/[^0-9]/g, '');
         e.target.value = val;
+        const warningEl = document.getElementById('peringatanSudahSetor');
+        warningEl.style.display = 'none';
+
         if (val.length === 4) {
             let fullWithDots = "33.08.130.022.000." + val + ".7";
             let fullClean = "3308130022000" + val + "7";
 
             document.getElementById('iNopLengkap').value = fullWithDots;
 
+            let sudahLunas = dataLunasLokal.find(l => {
+                if (l.nop === fullWithDots) return true;
+                if (l.daftarNop && l.daftarNop.some(item => item.nop === fullWithDots)) return true;
+                return false;
+            });
+
+            if (sudahLunas) {
+                warningEl.style.display = 'block';
+            }
+
             let data = databaseWarga.find(w => {
                 if (!w.nop) return false;
                 let nopClean = String(w.nop).replace(/[^0-9]/g, '');
                 return w.nop === fullWithDots || nopClean === fullClean || w.nop.endsWith(val + ".7") || w.nop.endsWith(val);
             });
-
-            if (!data) {
-                data = dataLunasLokal.find(l => {
-                    if (!l.nop) return false;
-                    let nopClean = String(l.nop).replace(/[^0-9]/g, '');
-                    return l.nop === fullWithDots || nopClean === fullClean || l.nop.endsWith(val + ".7") || l.nop.endsWith(val);
-                });
-            }
 
             if (data) {
                 document.getElementById('iNamaWarga').value = data.nama;
@@ -534,6 +561,7 @@
         document.getElementById('iNopLengkap').value = "";
         document.getElementById('iNamaWarga').value = "";
         document.getElementById('iTagihan').value = "";
+        document.getElementById('peringatanSudahSetor').style.display = 'none';
         document.getElementById('iNopAkhir').focus();
     });
 
@@ -628,6 +656,7 @@
             alert(`Data master warga ${nama} (${kadus}) berhasil disimpan!`);
             document.getElementById('formTambahWarga').reset();
             setAddKadus('Kadus 1');
+            modalMaster.style.display = 'none';
         } catch (err) {
             alert("Gagal menambah warga: " + err.message);
         }
@@ -642,8 +671,9 @@
         let keyword = document.getElementById('search').value.toLowerCase();
 
         let totalSetorAll = 0;
-        let totalNominalKadus1 = 0, countKadus1 = 0;
-        let totalNominalKadus2 = 0, countKadus2 = 0;
+        let totalNominalKadus1 = 0, countNopK1 = 0;
+        let totalNominalKadus2 = 0, countNopK2 = 0;
+        let totalNopGlobal = 0;
 
         let targetMasterK1 = 0, targetMasterK2 = 0;
         databaseWarga.forEach(w => {
@@ -654,15 +684,17 @@
         dataLunasLokal.forEach(item => {
             let nominal = item.tagihan || 0;
             let kadusWilayah = item.kadus || 'Kadus 1';
+            let jmlNopItem = item.daftarNop ? item.daftarNop.length : 1;
 
             totalSetorAll += nominal;
+            totalNopGlobal += jmlNopItem;
 
             if (kadusWilayah === 'Kadus 1') {
                 totalNominalKadus1 += nominal;
-                countKadus1++;
+                countNopK1 += jmlNopItem;
             } else if (kadusWilayah === 'Kadus 2') {
                 totalNominalKadus2 += nominal;
-                countKadus2++;
+                countNopK2 += jmlNopItem;
             }
         });
 
@@ -681,14 +713,15 @@
                 currentFilteredTotal += item.tagihan;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight:bold; color:var(--accent);">${infoNop}</td>
-                    <td>${penyetor}</td>
+                    <td>
+                        <b>${penyetor}</b><br>
+                        <span style="font-size:10px; color:var(--accent);">${infoNop} • ${item.tanggal || '-'}</span>
+                    </td>
                     <td><span class="badge badge-kadus">${k}</span></td>
-                    <td style="font-weight:bold;">Rp ${(item.tagihan || 0).toLocaleString('id-ID')}</td>
-                    <td><span class="badge badge-lunas">✅ Setor (${item.tanggal || '-'})</span></td>
+                    <td style="font-weight:bold; color:var(--success);">Rp ${(item.tagihan || 0).toLocaleString('id-ID')}</td>
                     <td style="text-align:center;">
                         <button class="btn btn-receipt btn-struk" data-id="${item.id}">🧾 Struk</button>
-                        <button class="btn btn-delete btn-hapus" data-id="${item.id}">🗑️ Batal</button>
+                        <button class="btn btn-delete btn-hapus" data-id="${item.id}">🗑️</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -696,20 +729,20 @@
         });
 
         document.getElementById('statTotalSetor').innerText = "Rp " + totalSetorAll.toLocaleString('id-ID');
-        document.getElementById('statJumlahTransaksi').innerText = dataLunasLokal.length + " Transaksi Masuk";
-        document.getElementById('totalNominalTabel').innerText = "Total Ditampilkan: Rp " + currentFilteredTotal.toLocaleString('id-ID');
+        document.getElementById('statJumlahTransaksi').innerText = `${dataLunasLokal.length} Transaksi / ${totalNopGlobal} NOP Lunas`;
+        document.getElementById('totalNominalTabel').innerText = "Rp " + currentFilteredTotal.toLocaleString('id-ID');
 
         let p1 = targetMasterK1 > 0 ? Math.min(100, Math.round((totalNominalKadus1 / targetMasterK1) * 100)) : 0;
         let p2 = targetMasterK2 > 0 ? Math.min(100, Math.round((totalNominalKadus2 / targetMasterK2) * 100)) : 0;
 
         document.getElementById('persenKadus1').innerText = p1 + "%";
         document.getElementById('nominalKadus1').innerText = "Rp " + totalNominalKadus1.toLocaleString('id-ID');
-        document.getElementById('jumlahKadus1').innerText = countKadus1 + " Transaksi";
+        document.getElementById('jumlahKadus1').innerText = countNopK1 + " NOP";
         document.getElementById('barKadus1').style.width = p1 + "%";
 
         document.getElementById('persenKadus2').innerText = p2 + "%";
         document.getElementById('nominalKadus2').innerText = "Rp " + totalNominalKadus2.toLocaleString('id-ID');
-        document.getElementById('jumlahKadus2').innerText = countKadus2 + " Transaksi";
+        document.getElementById('jumlahKadus2').innerText = countNopK2 + " NOP";
         document.getElementById('barKadus2').style.width = p2 + "%";
 
         document.querySelectorAll('.btn-struk').forEach(btn => {
@@ -720,8 +753,74 @@
         });
     }
 
+    function tampilkanTabelSudahSetor() {
+        const tbody = document.getElementById('tabelSudahSetor');
+        if(!tbody) return;
+        tbody.innerHTML = "";
+
+        let kadusFilter = document.getElementById('filterKadusSudahSetor').value;
+        let keyword = document.getElementById('searchSudahSetor').value.toLowerCase();
+
+        let daftarRincianNop = [];
+
+        dataLunasLokal.forEach(item => {
+            let k = item.kadus || 'Kadus 1';
+            let tgl = item.tanggal || '-';
+            let penyetor = item.namaPenyetor || item.nama || '';
+
+            if (item.daftarNop && Array.isArray(item.daftarNop)) {
+                item.daftarNop.forEach(sub => {
+                    daftarRincianNop.push({
+                        nop: sub.nop,
+                        nama: sub.nama,
+                        kadus: k,
+                        tagihan: sub.tagihan || 0,
+                        tanggal: tgl,
+                        penyetor: penyetor
+                    });
+                });
+            } else {
+                daftarRincianNop.push({
+                    nop: item.nop || '-',
+                    nama: item.nama || '-',
+                    kadus: k,
+                    tagihan: item.tagihan || 0,
+                    tanggal: tgl,
+                    penyetor: penyetor
+                });
+            }
+        });
+
+        let countTampil = 0;
+
+        daftarRincianNop.forEach(row => {
+            let matchKadus = (kadusFilter === 'semua') || (row.kadus.toLowerCase() === kadusFilter.toLowerCase());
+            let matchSearch = (row.nop.toLowerCase().includes(keyword)) || (row.nama.toLowerCase().includes(keyword));
+
+            if (matchKadus && matchSearch) {
+                countTampil++;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <b style="color:var(--accent);">${row.nop}</b><br>
+                        <span style="font-weight:600;">${row.nama}</span><br>
+                        <span style="font-size:10px; color:var(--text-sub);">Setor: ${row.tanggal}</span>
+                    </td>
+                    <td><span class="badge badge-kadus">${row.kadus}</span></td>
+                    <td style="font-weight:bold; color:var(--success);">Rp ${row.tagihan.toLocaleString('id-ID')}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+
+        document.getElementById('totalNopLunasBadge').innerText = `${countTampil} NOP Lunas`;
+    }
+
     document.getElementById('filterKadusTabel').addEventListener('change', tampilkanTabel);
     document.getElementById('search').addEventListener('input', tampilkanTabel);
+
+    document.getElementById('filterKadusSudahSetor').addEventListener('change', tampilkanTabelSudahSetor);
+    document.getElementById('searchSudahSetor').addEventListener('input', tampilkanTabelSudahSetor);
 
     function cetakStruk(id) {
         const item = dataLunasLokal.find(d => d.id === id);
@@ -758,7 +857,7 @@
 
     window.downloadStrukGambar = function() {
         const elemenStruk = document.getElementById('areaStruk');
-        html2canvas(elemenStruk, { scale: 1 }).then(canvas => {
+        html2canvas(elemenStruk, { scale: 2 }).then(canvas => {
             const link = document.createElement('a');
             link.download = `Struk_Kolektif_${tahunAktif}.png`;
             link.href = canvas.toDataURL('image/png');
@@ -779,15 +878,35 @@
     }
 
     document.getElementById('btnEksporExcel').addEventListener('click', () => {
-        let dataExcel = dataLunasLokal.map((item, index) => ({
-            "No": index + 1,
-            "Tahun": tahunAktif,
-            "Nama Penyetor": item.namaPenyetor || item.nama,
-            "Jumlah NOP": item.daftarNop ? item.daftarNop.length : 1,
-            "Kadus": item.kadus,
-            "Total Nominal (Rp)": item.tagihan,
-            "Tanggal Setor": item.tanggal
-        }));
+        let dataExcel = [];
+        let noUrut = 1;
+        dataLunasLokal.forEach((item) => {
+            if (item.daftarNop && Array.isArray(item.daftarNop)) {
+                item.daftarNop.forEach(sub => {
+                    dataExcel.push({
+                        "No": noUrut++,
+                        "Tahun": tahunAktif,
+                        "NOP": sub.nop,
+                        "Nama Wajib Pajak": sub.nama,
+                        "Penyetor Kolektif": item.namaPenyetor || item.nama,
+                        "Kadus": item.kadus,
+                        "Nominal (Rp)": sub.tagihan,
+                        "Tanggal Setor": item.tanggal
+                    });
+                });
+            } else {
+                dataExcel.push({
+                    "No": noUrut++,
+                    "Tahun": tahunAktif,
+                    "NOP": item.nop,
+                    "Nama Wajib Pajak": item.nama,
+                    "Penyetor Kolektif": item.namaPenyetor || item.nama,
+                    "Kadus": item.kadus,
+                    "Nominal (Rp)": item.tagihan,
+                    "Tanggal Setor": item.tanggal
+                });
+            }
+        });
 
         const worksheet = XLSX.utils.json_to_sheet(dataExcel);
         const workbook = XLSX.utils.book_new();
