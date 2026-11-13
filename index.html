@@ -37,6 +37,13 @@
         .stat-card h3 { margin: 0; font-size: 13px; color: var(--text-sub); text-transform: uppercase; }
         .stat-card p { margin: 10px 0 0; font-size: 24px; font-weight: 800; }
 
+        .kadus-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        @media (max-width: 768px) { .kadus-summary-grid { grid-template-columns: 1fr; } }
+        .kadus-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+        .kadus-box h4 { margin: 0 0 12px 0; color: var(--accent); font-size: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-bar-container { background: var(--bg-input); border-radius: 8px; height: 10px; width: 100%; margin: 10px 0; overflow: hidden; }
+        .progress-bar { background: var(--success); height: 100%; width: 0%; transition: width 0.5s ease; }
+
         .grid-main { display: grid; grid-template-columns: 1fr 1.8fr; gap: 25px; }
         @media (max-width: 960px) { .grid-main { grid-template-columns: 1fr; } }
         
@@ -47,9 +54,7 @@
         .nop-group input { border: none; padding: 12px; flex: 1; font-weight: bold; font-size: 20px; text-align: center; outline: none; background: transparent; color: var(--text-main); }
         
         .display-input, .input-field { padding: 12px; border: 1px solid var(--border); border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 15px; margin-bottom: 15px; background: var(--bg-primary); font-weight: bold; color: var(--text-main); }
-        select.input-field { background: var(--bg-input); cursor: pointer; }
 
-        /* Tombol Cepat Kadus */
         .kadus-quick-btns { display: flex; gap: 10px; margin-bottom: 15px; }
         .btn-kadus-toggle { flex: 1; padding: 10px; border: 2px solid var(--border); background: var(--bg-input); color: var(--text-main); font-weight: bold; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.2s; font-size: 13px; }
         .btn-kadus-toggle.active { border-color: var(--accent); background: var(--accent); color: white; }
@@ -60,7 +65,6 @@
 
         .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: inline-block; }
         .badge-lunas { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
-        .badge-belum { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
         .badge-kadus { background: rgba(59, 130, 246, 0.15); color: var(--accent); border: 1px solid var(--accent); }
         .badge-tahun { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); font-size: 11px; padding: 2px 8px; border-radius: 6px; }
 
@@ -108,7 +112,7 @@
             <p style="margin:4px 0 0; opacity: 0.8; font-size: 12px;">Sistem Pengelolaan PBB Multi-Tahun Desa Sangen</p>
         </div>
         <div class="header-btns">
-            <!-- FILTER TAHUN -->
+            <!-- PILIH TAHUN -->
             <div class="year-selector-box">
                 <span style="font-size: 12px; opacity: 0.9;">📅 Tahun Pajak:</span>
                 <select id="pilihTahun">
@@ -126,19 +130,33 @@
 
     <div class="dashboard">
         <div class="stat-card">
-            <h3>Total Lunas (<span class="label-tahun">2026</span>)</h3>
-            <p id="statLunas" style="color: var(--success);">Rp 0</p>
-            <span id="statJumlahLunas" style="font-size: 12px; color: var(--text-sub);">0 Warga</span>
+            <h3>Total Terkumpul (<span class="label-tahun">2026</span>)</h3>
+            <p id="statTotalSetor" style="color: var(--success);">Rp 0</p>
+            <span id="statJumlahTransaksi" style="font-size: 12px; color: var(--text-sub);">0 Warga Telah Setor</span>
         </div>
-        <div class="stat-card">
-            <h3>Total Belum Lunas (<span class="label-tahun">2026</span>)</h3>
-            <p id="statBelumLunas" style="color: var(--danger);">Rp 0</p>
-            <span id="statJumlahBelum" style="font-size: 12px; color: var(--text-sub);">0 Warga</span>
+    </div>
+
+    <!-- REKAPITULASI TERPISAH KADUS 1 DAN KADUS 2 -->
+    <div class="kadus-summary-grid">
+        <div class="kadus-box">
+            <h4>📍 KADUS 1 <span id="persenKadus1" style="font-size: 14px; color: var(--success);">0%</span></h4>
+            <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Terkumpul: <b id="nominalKadus1" style="color: var(--success);">Rp 0</b></span>
+                <span>Warga Setor: <b id="jumlahKadus1">0 Orang</b></span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="barKadus1"></div>
+            </div>
         </div>
-        <div class="stat-card">
-            <h3>Jumlah Warga Terdaftar</h3>
-            <p id="statTotalWarga" style="color: var(--accent);">0</p>
-            <span style="font-size: 12px; color: var(--text-sub);">Total Seluruh Warga</span>
+        <div class="kadus-box">
+            <h4>📍 KADUS 2 <span id="persenKadus2" style="font-size: 14px; color: var(--success);">0%</span></h4>
+            <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Terkumpul: <b id="nominalKadus2" style="color: var(--success);">Rp 0</b></span>
+                <span>Warga Setor: <b id="jumlahKadus2">0 Orang</b></span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="barKadus2"></div>
+            </div>
         </div>
     </div>
 
@@ -176,9 +194,9 @@
             </div>
 
             <div class="card">
-                <div class="form-title" style="border-color: var(--warning);">+ TAMBAH / UPDATE WAJIB PAJAK</div>
+                <div class="form-title" style="border-color: var(--warning);">+ TAMBAH / UPDATE MASTER WARGA</div>
                 <p style="font-size: 11px; color: var(--text-sub); margin-top: -12px; margin-bottom: 15px;">
-                    *Data Master Warga universal untuk desa.
+                    *Database master warga universal desa.
                 </p>
                 <form id="formTambahWarga">
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
@@ -201,7 +219,7 @@
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NOMINAL TAGIHAN (RP)</label>
                     <input type="number" id="addTagihan" class="input-field" placeholder="Contoh: 50000" required>
                     
-                    <button type="submit" class="btn btn-add">➕ SIMPAN DATA WARGA</button>
+                    <button type="submit" class="btn btn-add">➕ SIMPAN KE MASTER WARGA</button>
                 </form>
             </div>
         </section>
@@ -209,25 +227,18 @@
         <section>
             <div class="card">
                 <div class="form-title">
-                    <span>MONITORING WAJIB PAJAK <span class="label-tahun">2026</span></span>
+                    <span>DATA PEMBAYARAN MASUK <span class="label-tahun">2026</span></span>
                     <span id="totalNominalTabel" style="font-size: 13px; color: var(--success);">Rp 0</span>
                 </div>
 
-                <!-- FILTER TERPISAH: KADUS, STATUS BAYAR, PENCARIAN -->
                 <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <select id="filterKadusTabel" class="filter-select">
-                        <option value="semua">🏘️ Semua Wilayah</option>
+                        <option value="semua">🏘️ Semua Wilayah Kadus</option>
                         <option value="Kadus 1">📍 Kadus 1</option>
                         <option value="Kadus 2">📍 Kadus 2</option>
                     </select>
 
-                    <select id="filterStatus" class="filter-select" style="border-color: var(--accent);">
-                        <option value="semua">📌 Semua Status Bayar</option>
-                        <option value="lunas">✅ Sudah Lunas (Setor)</option>
-                        <option value="belum">❌ Belum Lunas</option>
-                    </select>
-
-                    <input type="text" id="search" class="search-input" placeholder="🔍 Cari NOP / Nama...">
+                    <input type="text" id="search" class="search-input" placeholder="🔍 Cari NOP / Nama Wajib Pajak...">
                     <button id="btnEksporExcel" class="btn btn-excel">📊 Excel</button>
                     <button onclick="window.print()" class="btn btn-print">🖨️ Cetak</button>
                 </div>
@@ -239,7 +250,7 @@
                             <th>NAMA</th>
                             <th>KADUS</th>
                             <th>NOMINAL</th>
-                            <th>STATUS</th>
+                            <th>TANGGAL & STATUS</th>
                             <th style="text-align:center;">AKSI</th>
                         </tr>
                     </thead>
@@ -294,14 +305,12 @@
 
     const DEFAULT_ADMIN_EMAIL = "admin@sangen.desa.id";
 
-    // Fungsi Toggle Tombol Kadus Form Input Setor
     window.setKadusInput = function(kadus) {
         document.getElementById('iKadusVal').value = kadus;
         document.getElementById('btnInputKadus1').classList.toggle('active', kadus === 'Kadus 1');
         document.getElementById('btnInputKadus2').classList.toggle('active', kadus === 'Kadus 2');
     };
 
-    // Fungsi Toggle Tombol Kadus Form Tambah Warga
     window.setAddKadus = function(kadus) {
         document.getElementById('addKadusVal').value = kadus;
         document.getElementById('btnAddKadus1').classList.toggle('active', kadus === 'Kadus 1');
@@ -440,7 +449,7 @@
 
         const sudahLunas = dataLunasLokal.find(l => l.nop === nopLengkap);
         if (sudahLunas) {
-            return alert(`NOP ${nopLengkap} (${nama}) SUDAH LUNAS untuk tahun ${tahunAktif}!`);
+            return alert(`NOP ${nopLengkap} (${nama}) SUDAH LUNAS tercatat untuk tahun ${tahunAktif}!`);
         }
 
         const skrg = new Date();
@@ -456,7 +465,7 @@
         try {
             let namaKoleksiLunas = "pbb_lunas_" + tahunAktif;
             await addDoc(collection(db, namaKoleksiLunas), payload);
-            alert(`Pembayaran ${payload.nama} (${payload.kadus}) Tahun ${tahunAktif} LUNAS!`);
+            alert(`Setoran ${payload.nama} (${payload.kadus}) Tahun ${tahunAktif} BERHASIL DISIMPAN!`);
             document.getElementById('formPBB').reset();
             setKadusInput('Kadus 1');
             document.getElementById('iNopAkhir').focus();
@@ -483,7 +492,7 @@
                 kadus: kadus,
                 tagihan: tagihan
             });
-            alert(`Data warga ${nama} (${kadus}) berhasil disimpan!`);
+            alert(`Data master warga ${nama} (${kadus}) berhasil disimpan!`);
             document.getElementById('formTambahWarga').reset();
             setAddKadus('Kadus 1');
         } catch (err) {
@@ -496,98 +505,79 @@
         if(!tbody) return;
         tbody.innerHTML = "";
 
-        let statusFilter = document.getElementById('filterStatus').value;
         let kadusFilter = document.getElementById('filterKadusTabel').value;
         let keyword = document.getElementById('search').value.toLowerCase();
 
-        let totalLunasVal = 0, countLunas = 0;
-        let totalBelumVal = 0, countBelum = 0;
+        let totalSetorAll = 0;
+        let totalNominalKadus1 = 0, countKadus1 = 0;
+        let totalNominalKadus2 = 0, countKadus2 = 0;
 
-        let mapGabungan = new Map();
-
+        let targetMasterK1 = 0, targetMasterK2 = 0;
         databaseWarga.forEach(w => {
-            mapGabungan.set(w.nop, {
-                nop: w.nop,
-                nama: w.nama,
-                kadus: w.kadus || 'Kadus 1',
-                tagihan: w.tagihan || 0,
-                isLunas: false,
-                trxId: null,
-                tanggal: '-'
-            });
+            if ((w.kadus || 'Kadus 1') === 'Kadus 1') targetMasterK1 += (w.tagihan || 0);
+            else targetMasterK2 += (w.tagihan || 0);
         });
 
-        dataLunasLokal.forEach(l => {
-            let existing = mapGabungan.get(l.nop);
-            if (existing) {
-                existing.isLunas = true;
-                existing.trxId = l.id;
-                existing.tanggal = l.tanggal || '-';
-                if (l.kadus) existing.kadus = l.kadus;
-                if (l.nama) existing.nama = l.nama;
-                if (l.tagihan) existing.tagihan = l.tagihan;
-            } else {
-                mapGabungan.set(l.nop, {
-                    nop: l.nop,
-                    nama: l.nama || 'Tanpa Nama',
-                    kadus: l.kadus || 'Kadus 1',
-                    tagihan: l.tagihan || 0,
-                    isLunas: true,
-                    trxId: l.id,
-                    tanggal: l.tanggal || '-'
-                });
+        dataLunasLokal.forEach(item => {
+            let nominal = item.tagihan || 0;
+            let kadusWilayah = item.kadus || 'Kadus 1';
+
+            totalSetorAll += nominal;
+
+            if (kadusWilayah === 'Kadus 1') {
+                totalNominalKadus1 += nominal;
+                countKadus1++;
+            } else if (kadusWilayah === 'Kadus 2') {
+                totalNominalKadus2 += nominal;
+                countKadus2++;
             }
         });
 
-        let gabunganData = Array.from(mapGabungan.values());
         let currentFilteredTotal = 0;
+        let dataTampil = [...dataLunasLokal];
 
-        gabunganData.forEach(item => {
-            if (item.isLunas) {
-                totalLunasVal += item.tagihan;
-                countLunas++;
-            } else {
-                totalBelumVal += item.tagihan;
-                countBelum++;
-            }
+        dataTampil.forEach(item => {
+            let k = item.kadus || 'Kadus 1';
+            let n = item.nama || '';
+            let nop = item.nop || '';
 
-            let matchKadus = (kadusFilter === 'semua') || (item.kadus.toLowerCase() === kadusFilter.toLowerCase());
-            let matchStatus = (statusFilter === 'semua') || 
-                              (statusFilter === 'lunas' && item.isLunas) || 
-                              (statusFilter === 'belum' && !item.isLunas);
-            let matchSearch = (item.nama && item.nama.toLowerCase().includes(keyword)) || 
-                              (item.nop && item.nop.includes(keyword));
+            let matchKadus = (kadusFilter === 'semua') || (k.toLowerCase() === kadusFilter.toLowerCase());
+            let matchSearch = (n.toLowerCase().includes(keyword)) || (nop.includes(keyword));
 
-            if (matchKadus && matchStatus && matchSearch) {
+            if (matchKadus && matchSearch) {
                 currentFilteredTotal += item.tagihan;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="font-weight:bold; color:var(--accent);">${item.nop}</td>
                     <td>${item.nama}</td>
-                    <td><span class="badge badge-kadus">${item.kadus}</span></td>
-                    <td style="font-weight:bold;">Rp ${item.tagihan.toLocaleString('id-ID')}</td>
-                    <td>
-                        ${item.isLunas 
-                            ? `<span class="badge badge-lunas">✅ Lunas (${item.tanggal})</span>` 
-                            : `<span class="badge badge-belum">❌ Belum Setor</span>`}
-                    </td>
+                    <td><span class="badge badge-kadus">${k}</span></td>
+                    <td style="font-weight:bold;">Rp ${(item.tagihan || 0).toLocaleString('id-ID')}</td>
+                    <td><span class="badge badge-lunas">✅ Setor (${item.tanggal || '-'})</span></td>
                     <td style="text-align:center;">
-                        ${item.isLunas 
-                            ? `<button class="btn btn-receipt btn-struk" data-id="${item.trxId}">🧾 Struk</button>
-                               <button class="btn btn-delete btn-hapus" data-id="${item.trxId}">🗑️ Batal</button>` 
-                            : `<span style="font-size:11px; color:var(--text-sub);">-</span>`}
+                        <button class="btn btn-receipt btn-struk" data-id="${item.id}">🧾 Struk</button>
+                        <button class="btn btn-delete btn-hapus" data-id="${item.id}">🗑️ Batal</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             }
         });
 
-        document.getElementById('statLunas').innerText = "Rp " + totalLunasVal.toLocaleString('id-ID');
-        document.getElementById('statJumlahLunas').innerText = countLunas + " Warga Lunas";
-        document.getElementById('statBelumLunas').innerText = "Rp " + totalBelumVal.toLocaleString('id-ID');
-        document.getElementById('statJumlahBelum').innerText = countBelum + " Warga Belum";
-        document.getElementById('statTotalWarga').innerText = gabunganData.length;
-        document.getElementById('totalNominalTabel').innerText = "Total: Rp " + currentFilteredTotal.toLocaleString('id-ID');
+        document.getElementById('statTotalSetor').innerText = "Rp " + totalSetorAll.toLocaleString('id-ID');
+        document.getElementById('statJumlahTransaksi').innerText = dataLunasLokal.length + " Warga Telah Setor";
+        document.getElementById('totalNominalTabel').innerText = "Total Ditampilkan: Rp " + currentFilteredTotal.toLocaleString('id-ID');
+
+        let p1 = targetMasterK1 > 0 ? Math.min(100, Math.round((totalNominalKadus1 / targetMasterK1) * 100)) : 0;
+        let p2 = targetMasterK2 > 0 ? Math.min(100, Math.round((totalNominalKadus2 / targetMasterK2) * 100)) : 0;
+
+        document.getElementById('persenKadus1').innerText = p1 + "%";
+        document.getElementById('nominalKadus1').innerText = "Rp " + totalNominalKadus1.toLocaleString('id-ID');
+        document.getElementById('jumlahKadus1').innerText = countKadus1 + " Orang";
+        document.getElementById('barKadus1').style.width = p1 + "%";
+
+        document.getElementById('persenKadus2').innerText = p2 + "%";
+        document.getElementById('nominalKadus2').innerText = "Rp " + totalNominalKadus2.toLocaleString('id-ID');
+        document.getElementById('jumlahKadus2').innerText = countKadus2 + " Orang";
+        document.getElementById('barKadus2').style.width = p2 + "%";
 
         document.querySelectorAll('.btn-struk').forEach(btn => {
             btn.addEventListener('click', (e) => cetakStruk(e.target.getAttribute('data-id')));
@@ -597,7 +587,6 @@
         });
     }
 
-    document.getElementById('filterStatus').addEventListener('change', tampilkanTabel);
     document.getElementById('filterKadusTabel').addEventListener('change', tampilkanTabel);
     document.getElementById('search').addEventListener('input', tampilkanTabel);
 
@@ -609,7 +598,7 @@
         document.getElementById('rNop').innerText = item.nop;
         document.getElementById('rNama').innerText = item.nama;
         document.getElementById('rKadus').innerText = item.kadus;
-        document.getElementById('rTotal').innerText = "Rp " + item.tagihan.toLocaleString('id-ID');
+        document.getElementById('rTotal').innerText = "Rp " + (item.tagihan || 0).toLocaleString('id-ID');
         document.getElementById('receiptModal').style.display = 'flex';
     }
 
@@ -618,11 +607,11 @@
     });
 
     async function hapusData(id) {
-        if (confirm(`Batalkan status lunas transaksi tahun ${tahunAktif} ini?`)) {
+        if (confirm(`Batalkan data setoran ini dari tahun ${tahunAktif}?`)) {
             try {
                 let namaKoleksiLunas = "pbb_lunas_" + tahunAktif;
                 await deleteDoc(doc(db, namaKoleksiLunas, id));
-                alert("Status lunas dibatalkan.");
+                alert("Data setoran berhasil dibatalkan.");
             } catch (err) {
                 alert("Gagal membatalkan: " + err.message);
             }
@@ -630,38 +619,20 @@
     }
 
     document.getElementById('btnEksporExcel').addEventListener('click', () => {
-        let mapGabungan = new Map();
-        
-        databaseWarga.forEach(w => {
-            mapGabungan.set(w.nop, { nop: w.nop, nama: w.nama, kadus: w.kadus || 'Kadus 1', tagihan: w.tagihan || 0, isLunas: false, tanggal: '-' });
-        });
-
-        dataLunasLokal.forEach(l => {
-            let existing = mapGabungan.get(l.nop);
-            if (existing) {
-                existing.isLunas = true;
-                existing.tanggal = l.tanggal;
-                if (l.tagihan) existing.tagihan = l.tagihan;
-            } else {
-                mapGabungan.set(l.nop, { nop: l.nop, nama: l.nama, kadus: l.kadus || 'Kadus 1', tagihan: l.tagihan || 0, isLunas: true, tanggal: l.tanggal });
-            }
-        });
-
-        let dataExcel = Array.from(mapGabungan.values()).map((item, index) => ({
+        let dataExcel = dataLunasLokal.map((item, index) => ({
             "No": index + 1,
             "Tahun": tahunAktif,
             "NOP": item.nop,
             "Nama Wajib Pajak": item.nama,
             "Kadus": item.kadus,
             "Nominal (Rp)": item.tagihan,
-            "Status": item.isLunas ? "LUNAS" : "BELUM LUNAS",
-            "Tanggal Bayar": item.tanggal
+            "Tanggal Setor": item.tanggal
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataExcel);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, `PBB Sangen ${tahunAktif}`);
-        XLSX.writeFile(workbook, `Monitoring_PBB_Desa_Sangen_${tahunAktif}.xlsx`);
+        XLSX.utils.book_append_sheet(workbook, worksheet, `Setoran PBB ${tahunAktif}`);
+        XLSX.writeFile(workbook, `Rekap_Setoran_PBB_Desa_Sangen_${tahunAktif}.xlsx`);
     });
 </script>
 </body>
