@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Monitoring PBB Desa Sangen</title>
     
+    <!-- Library Excel & html2canvas untuk Download Gambar Struk -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         :root { 
@@ -82,27 +84,15 @@
         th { background: var(--bg-input); color: var(--text-sub); text-align: left; padding: 12px; font-size: 12px; }
         td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-main); }
 
-        /* Modal Struk */
-        #receiptModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; }
-        .receipt-card { background: white; color: black; padding: 20px; border-radius: 12px; width: 280px; font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        /* Modal Struk & Format Thermal 58mm */
+        #receiptModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
+        .receipt-card { background: white; color: black; padding: 15px; border-radius: 8px; width: 280px; font-family: 'Courier New', Courier, monospace; font-size: 12px; }
 
-        /* PENGATURAN KHUSUS PRINTER THERMAL 58mm / HP */
         @media print {
-            @page {
-                size: 58mm auto; /* Lebar kertas thermal standar 58mm */
-                margin: 0;
-            }
+            @page { size: 58mm auto; margin: 0; }
             body * { visibility: hidden; }
             #receiptModal, #receiptModal * { visibility: visible; }
-            #receiptModal { 
-                position: fixed; 
-                left: 0; 
-                top: 0; 
-                width: 58mm; 
-                background: white; 
-                padding: 5px;
-                border: none;
-            }
+            #receiptModal { position: fixed; left: 0; top: 0; width: 58mm; background: white; padding: 2px; }
             .no-print-modal { display: none !important; }
         }
     </style>
@@ -274,27 +264,31 @@
     </div>
 </div>
 
-<!-- MODAL STRUK (PAS UNTUK PRINTER THERMAL 58mm) -->
+<!-- MODAL STRUK (DILENGKAPI TOMBOL DOWNLOAD GAMBAR & CETAK THERMAL) -->
 <div id="receiptModal">
-    <div class="receipt-card">
-        <div style="text-align:center; font-weight:bold; font-size:14px;">PEMERINTAH DESA SANGEN</div>
-        <div style="text-align:center; font-size:10px; margin-bottom:8px;">BUKTI PEMBAYARAN PBB TAHUN <span id="rTahun">2026</span></div>
-        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
-        <div style="font-size:11px; line-height: 1.4;">
+    <div class="receipt-card" id="areaStruk">
+        <div style="text-align:center; font-weight:bold; font-size:13px;">PEMERINTAH DESA SANGEN</div>
+        <div style="text-align:center; font-size:10px; margin-bottom:6px;">BUKTI PEMBAYARAN PBB TAHUN <span id="rTahun">2026</span></div>
+        <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
+        <div style="font-size:11px; line-height: 1.3;">
             <div>TGL : <span id="rTgl"></span></div>
             <div>NOP : <span id="rNop"></span></div>
             <div>NAMA: <span id="rNama"></span></div>
             <div>KADUS: <span id="rKadus"></span></div>
         </div>
-        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
-        <div style="font-size:12px; font-weight:bold; text-align:right;">TOTAL: <span id="rTotal"></span></div>
-        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
+        <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
+        <div style="font-size:11px; font-weight:bold; text-align:right;">TOTAL: <span id="rTotal"></span></div>
+        <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
         <div style="text-align:center; font-size:10px;">-- LUNAS / TERIMA KASIH --</div>
-        
-        <div class="no-print-modal" style="display:flex; gap:5px; margin-top:15px;">
-            <button onclick="window.print()" style="flex:1; padding:8px; background:#2563eb; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">🖨️ Cetak Thermal</button>
-            <button id="btnCloseReceipt" style="flex:1; padding:8px; background:#64748b; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Tutup</button>
+    </div>
+
+    <!-- TOMBOL AKSI DI LUAR AREA CETAK -->
+    <div class="no-print-modal" style="width: 280px; margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; gap: 5px;">
+            <button onclick="downloadStrukGambar()" style="flex:1; padding:8px; background:#10b981; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">📥 Download</button>
+            <button onclick="window.print()" style="flex:1; padding:8px; background:#2563eb; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">🖨️ Print</button>
         </div>
+        <button id="btnCloseReceipt" style="width:100%; padding:8px; background:#64748b; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Tutup</button>
     </div>
 </div>
 
@@ -623,6 +617,17 @@
     document.getElementById('btnCloseReceipt').addEventListener('click', () => {
         document.getElementById('receiptModal').style.display = 'none';
     });
+
+    // Fungsi Download Struk sebagai Gambar (PNG) untuk dikirim ke WhatsApp
+    window.downloadStrukGambar = function() {
+        const elemenStruk = document.getElementById('areaStruk');
+        html2canvas(elemenStruk, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Struk_PBB_${document.getElementById('rNop').innerText}_${tahunAktif}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    };
 
     async function hapusData(id) {
         if (confirm(`Batalkan data setoran ini dari tahun ${tahunAktif}?`)) {
