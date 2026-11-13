@@ -82,13 +82,27 @@
         th { background: var(--bg-input); color: var(--text-sub); text-align: left; padding: 12px; font-size: 12px; }
         td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-main); }
 
+        /* Modal Struk */
         #receiptModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; }
-        .receipt-card { background: white; color: black; padding: 30px; border-radius: 12px; width: 320px; font-family: 'Courier New', Courier, monospace; }
+        .receipt-card { background: white; color: black; padding: 20px; border-radius: 12px; width: 280px; font-family: 'Courier New', Courier, monospace; font-size: 12px; }
 
+        /* PENGATURAN KHUSUS PRINTER THERMAL 58mm / HP */
         @media print {
+            @page {
+                size: 58mm auto; /* Lebar kertas thermal standar 58mm */
+                margin: 0;
+            }
             body * { visibility: hidden; }
             #receiptModal, #receiptModal * { visibility: visible; }
-            #receiptModal { position: absolute; left: 0; top: 0; width: 100%; background: white; }
+            #receiptModal { 
+                position: fixed; 
+                left: 0; 
+                top: 0; 
+                width: 58mm; 
+                background: white; 
+                padding: 5px;
+                border: none;
+            }
             .no-print-modal { display: none !important; }
         }
     </style>
@@ -112,7 +126,6 @@
             <p style="margin:4px 0 0; opacity: 0.8; font-size: 12px;">Sistem Pengelolaan PBB Multi-Tahun Desa Sangen</p>
         </div>
         <div class="header-btns">
-            <!-- PILIH TAHUN -->
             <div class="year-selector-box">
                 <span style="font-size: 12px; opacity: 0.9;">📅 Tahun Pajak:</span>
                 <select id="pilihTahun">
@@ -261,21 +274,26 @@
     </div>
 </div>
 
+<!-- MODAL STRUK (PAS UNTUK PRINTER THERMAL 58mm) -->
 <div id="receiptModal">
     <div class="receipt-card">
-        <h3 style="text-align:center; margin:0;">DESA SANGEN</h3>
-        <p style="text-align:center; font-size:10px; margin-bottom:15px;">BUKTI PEMBAYARAN PBB <span id="rTahun">2026</span></p>
-        <hr style="border-style: dotted;">
-        <p style="font-size:11px;">TGL   : <span id="rTgl"></span></p>
-        <p style="font-size:11px;">NOP   : <span id="rNop"></span></p>
-        <p style="font-size:11px;">NAMA  : <span id="rNama"></span></p>
-        <p style="font-size:11px;">KADUS : <span id="rKadus"></span></p>
-        <p style="font-size:11px; font-weight:bold;">TOTAL : <span id="rTotal"></span></p>
-        <hr style="border-style: dotted;">
-        <p style="text-align:center; font-size:10px;">-- LUNAS / TERIMA KASIH --</p>
+        <div style="text-align:center; font-weight:bold; font-size:14px;">PEMERINTAH DESA SANGEN</div>
+        <div style="text-align:center; font-size:10px; margin-bottom:8px;">BUKTI PEMBAYARAN PBB TAHUN <span id="rTahun">2026</span></div>
+        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
+        <div style="font-size:11px; line-height: 1.4;">
+            <div>TGL : <span id="rTgl"></span></div>
+            <div>NOP : <span id="rNop"></span></div>
+            <div>NAMA: <span id="rNama"></span></div>
+            <div>KADUS: <span id="rKadus"></span></div>
+        </div>
+        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
+        <div style="font-size:12px; font-weight:bold; text-align:right;">TOTAL: <span id="rTotal"></span></div>
+        <div style="border-top: 1px dashed black; margin: 5px 0;"></div>
+        <div style="text-align:center; font-size:10px;">-- LUNAS / TERIMA KASIH --</div>
+        
         <div class="no-print-modal" style="display:flex; gap:5px; margin-top:15px;">
-            <button onclick="window.print()" style="flex:1; padding:8px;">Print</button>
-            <button id="btnCloseReceipt" style="flex:1; padding:8px;">Tutup</button>
+            <button onclick="window.print()" style="flex:1; padding:8px; background:#2563eb; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">🖨️ Cetak Thermal</button>
+            <button id="btnCloseReceipt" style="flex:1; padding:8px; background:#64748b; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Tutup</button>
         </div>
     </div>
 </div>
