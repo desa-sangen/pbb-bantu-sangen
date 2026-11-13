@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Monitoring PBB Desa Sangen</title>
     
-    <!-- Library Excel & html2canvas untuk Download Gambar Struk -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
@@ -80,13 +79,17 @@
         .btn-receipt { background: var(--accent); color: white; padding: 5px 10px; font-size: 11px; }
         .btn-delete { background: var(--danger); color: white; padding: 5px 10px; font-size: 11px; }
 
+        .cart-list { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 15px; max-height: 180px; overflow-y: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 12px; }
+        .cart-item:last-child { border-bottom: none; }
+
         table { width:100%; border-collapse:collapse; margin-top: 10px; }
         th { background: var(--bg-input); color: var(--text-sub); text-align: left; padding: 12px; font-size: 12px; }
         td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-main); }
 
         /* Modal Struk & Format Thermal 58mm */
         #receiptModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
-        .receipt-card { background: white; color: black; padding: 15px; border-radius: 8px; width: 280px; font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        .receipt-card { background: white; color: black; padding: 15px; border-radius: 8px; width: 280px; font-family: 'Courier New', Courier, monospace; font-size: 11px; }
 
         @media print {
             @page { size: 58mm auto; margin: 0; }
@@ -165,22 +168,26 @@
 
     <div class="grid-main">
         <section>
+            <!-- FORM INPUT BANYAK / KOLEKTIF -->
             <div class="card">
                 <div class="form-title">
-                    <span>INPUT SETOR LUNAS</span>
+                    <span>INPUT SETOR BANYAK (MULTI-NOP)</span>
                     <span class="badge-tahun">Tahun <span class="label-tahun">2026</span></span>
                 </div>
                 <form id="formPBB">
+                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA PENYETOR / KOLEKTIF</label>
+                    <input type="text" id="iNamaKolektif" class="display-input" placeholder="Nama Warga / Penyetor Kolektif..." required>
+
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
                     <div class="nop-group">
                         <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">33.08.130.022.000.</span>
-                        <input type="text" id="iNopAkhir" placeholder="0000" maxlength="4" required autocomplete="off">
+                        <input type="text" id="iNopAkhir" placeholder="0000" maxlength="4" autocomplete="off">
                         <span style="padding:10px; font-weight:bold; font-size:13px; color:var(--text-sub);">.7</span>
                     </div>
                     <input type="hidden" id="iNopLengkap">
 
-                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA WAJIB PAJAK</label>
-                    <input type="text" id="iNama" class="display-input" placeholder="Ketik NOP atau isi Nama Manual jika baru...">
+                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NAMA WAJIB PAJAK (OBJEK)</label>
+                    <input type="text" id="iNamaWarga" class="display-input" placeholder="Nama Wajib Pajak di NOP tersebut...">
                     
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">PILIH WILAYAH KADUS</label>
                     <div class="kadus-quick-btns">
@@ -192,15 +199,24 @@
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">NOMINAL TAGIHAN (RP)</label>
                     <input type="number" id="iTagihan" class="display-input" placeholder="Masukkan Nominal Saja, Misal: 50000">
                     
-                    <button type="submit" class="btn btn-save">💳 KONFIRMASI SETOR LUNAS (<span class="label-tahun">2026</span>)</button>
+                    <button type="button" id="btnTambahKeDaftar" class="btn" style="background: var(--warning); color: #000; width: 100%; justify-content: center; font-size: 14px; margin-bottom: 15px;">➕ TAMBAH NOP KE DAFTAR</button>
+
+                    <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">DAFTAR NOP DIPILIH (<span id="jumlahAntrean">0</span> NOP)</label>
+                    <div class="cart-list" id="daftarAntrean">
+                        <div style="text-align: center; color: var(--text-sub); padding: 10px; font-size: 11px;">Belum ada NOP ditambahkan</div>
+                    </div>
+
+                    <div style="font-size: 14px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 15px; background: var(--bg-input); padding: 10px; border-radius: 8px;">
+                        <span>TOTAL KESELURUHAN:</span>
+                        <span id="totalNominalAntrean" style="color: var(--success);">Rp 0</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-save">💳 KONFIRMASI & SIMPAN PEMBAYARAN KOLEKTIF</button>
                 </form>
             </div>
 
             <div class="card">
                 <div class="form-title" style="border-color: var(--warning);">+ TAMBAH / UPDATE MASTER WARGA</div>
-                <p style="font-size: 11px; color: var(--text-sub); margin-top: -12px; margin-bottom: 15px;">
-                    *Database master warga universal desa.
-                </p>
                 <form id="formTambahWarga">
                     <label style="font-size:11px; color:var(--text-sub); font-weight:bold;">4 DIGIT AKHIR NOP</label>
                     <div class="nop-group">
@@ -249,8 +265,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>NOP</th>
-                            <th>NAMA</th>
+                            <th>NOP / KOLEKTIF</th>
+                            <th>NAMA PENYETOR</th>
                             <th>KADUS</th>
                             <th>NOMINAL</th>
                             <th>TANGGAL & STATUS</th>
@@ -264,25 +280,28 @@
     </div>
 </div>
 
-<!-- MODAL STRUK (DILENGKAPI TOMBOL DOWNLOAD GAMBAR & CETAK THERMAL) -->
+<!-- MODAL STRUK KOLEKTIF (MENDUKUNG BANYAK NOP MEMANJANG) -->
 <div id="receiptModal">
     <div class="receipt-card" id="areaStruk">
         <div style="text-align:center; font-weight:bold; font-size:13px;">PEMERINTAH DESA SANGEN</div>
         <div style="text-align:center; font-size:10px; margin-bottom:6px;">BUKTI PEMBAYARAN PBB TAHUN <span id="rTahun">2026</span></div>
         <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
         <div style="font-size:11px; line-height: 1.3;">
-            <div>TGL : <span id="rTgl"></span></div>
-            <div>NOP : <span id="rNop"></span></div>
-            <div>NAMA: <span id="rNama"></span></div>
-            <div>KADUS: <span id="rKadus"></span></div>
+            <div>TGL    : <span id="rTgl"></span></div>
+            <div>PENYETOR: <span id="rPenyetor"></span></div>
+            <div>KADUS  : <span id="rKadus"></span></div>
         </div>
         <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
-        <div style="font-size:11px; font-weight:bold; text-align:right;">TOTAL: <span id="rTotal"></span></div>
+        <div style="font-size:10px; font-weight:bold;">DAFTAR NOP & NOMINAL:</div>
+        <div id="rDaftarNopContainer" style="font-size:10px; margin: 4px 0; line-height: 1.4;">
+            <!-- NOP-NOP akan dimuat memanjang di sini secara dinamis -->
+        </div>
+        <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
+        <div style="font-size:12px; font-weight:bold; text-align:right;">TOTAL: <span id="rTotal"></span></div>
         <div style="border-top: 1px dashed black; margin: 4px 0;"></div>
         <div style="text-align:center; font-size:10px;">-- LUNAS / TERIMA KASIH --</div>
     </div>
 
-    <!-- TOMBOL AKSI DI LUAR AREA CETAK -->
     <div class="no-print-modal" style="width: 280px; margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
         <div style="display: flex; gap: 5px;">
             <button onclick="downloadStrukGambar()" style="flex:1; padding:8px; background:#10b981; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">📥 Download</button>
@@ -312,6 +331,7 @@
 
     let databaseWarga = [];
     let dataLunasLokal = [];
+    let antreanSetor = [];
     let tahunAktif = localStorage.getItem('pbb_tahun_aktif') || "2026";
     let unsubscribeLunas = null;
 
@@ -345,6 +365,8 @@
         document.querySelectorAll('.label-tahun').forEach(el => {
             el.innerText = tahunAktif;
         });
+        antreanSetor = [];
+        updateAntreanUI();
         muatDataLunasFirebase();
     }
 
@@ -438,49 +460,120 @@
             }
 
             if (data) {
-                document.getElementById('iNama').value = data.nama;
+                document.getElementById('iNamaWarga').value = data.nama;
                 setKadusInput(data.kadus || "Kadus 1");
                 document.getElementById('iTagihan').value = data.tagihan || 0;
+                // Otomatis isi nama penyetor jika masih kosong
+                let namaPenyetorInput = document.getElementById('iNamaKolektif');
+                if (!namaPenyetorInput.value) namaPenyetorInput.value = data.nama;
             } else {
-                document.getElementById('iNama').value = "";
+                document.getElementById('iNamaWarga').value = "";
                 document.getElementById('iTagihan').value = "";
-                document.getElementById('iNama').placeholder = "NOP baru, ketik nama di sini...";
+                document.getElementById('iNamaWarga').placeholder = "NOP baru, ketik nama di sini...";
             }
         }
     });
 
-    document.getElementById('formPBB').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const nama = document.getElementById('iNama').value.trim();
-        const kadus = document.getElementById('iKadusVal').value;
-        const tagihanVal = parseInt(document.getElementById('iTagihan').value);
+    document.getElementById('btnTambahKeDaftar').addEventListener('click', () => {
         const nopLengkap = document.getElementById('iNopLengkap').value;
+        const nopAkhir = document.getElementById('iNopAkhir').value.trim();
+        const namaWarga = document.getElementById('iNamaWarga').value.trim();
+        const tagihanVal = parseInt(document.getElementById('iTagihan').value);
 
-        if (!nama) return alert("Nama Wajib Pajak wajib diisi!");
+        if (!nopAkhir || nopAkhir.length !== 4) return alert("Masukkan 4 digit akhir NOP dengan benar!");
+        if (!namaWarga) return alert("Nama Wajib Pajak wajib diisi!");
         if (isNaN(tagihanVal) || tagihanVal <= 0) return alert("Nominal Tagihan harus diisi angka yang valid!");
 
-        const sudahLunas = dataLunasLokal.find(l => l.nop === nopLengkap);
+        const sudahLunas = dataLunasLokal.find(l => l.nop === nopLengkap || (l.daftarNop && l.daftarNop.some(item => item.nop === nopLengkap)));
         if (sudahLunas) {
-            return alert(`NOP ${nopLengkap} (${nama}) SUDAH LUNAS tercatat untuk tahun ${tahunAktif}!`);
+            return alert(`NOP ${nopLengkap} (${namaWarga}) sudah tercatat LUNAS untuk tahun ${tahunAktif}!`);
         }
 
-        const skrg = new Date();
-        const payload = {
+        const sudahAdaDiAntrean = antreanSetor.find(a => a.nop === nopLengkap);
+        if (sudahAdaDiAntrean) {
+            return alert(`NOP ${nopLengkap} sudah ada di daftar antrean!`);
+        }
+
+        antreanSetor.push({
             nop: nopLengkap,
-            nama: nama,
+            nama: namaWarga,
+            tagihan: tagihanVal
+        });
+
+        updateAntreanUI();
+
+        document.getElementById('iNopAkhir').value = "";
+        document.getElementById('iNopLengkap').value = "";
+        document.getElementById('iNamaWarga').value = "";
+        document.getElementById('iTagihan').value = "";
+        document.getElementById('iNopAkhir').focus();
+    });
+
+    function updateAntreanUI() {
+        const container = document.getElementById('daftarAntrean');
+        document.getElementById('jumlahAntrean').innerText = antreanSetor.length;
+
+        if (antreanSetor.length === 0) {
+            container.innerHTML = `<div style="text-align: center; color: var(--text-sub); padding: 10px; font-size: 11px;">Belum ada NOP ditambahkan</div>`;
+            document.getElementById('totalNominalAntrean').innerText = "Rp 0";
+            return;
+        }
+
+        container.innerHTML = "";
+        let totalNominal = 0;
+
+        antreanSetor.forEach((item, index) => {
+            totalNominal += item.tagihan;
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div>
+                    <b>${item.nop}</b> - ${item.nama}<br>
+                    <span style="color: var(--success);">Rp ${item.tagihan.toLocaleString('id-ID')}</span>
+                </div>
+                <button type="button" onclick="hapusDariAntrean(${index})" style="background:var(--danger); color:white; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">X</button>
+            `;
+            container.appendChild(div);
+        });
+
+        document.getElementById('totalNominalAntrean').innerText = "Rp " + totalNominal.toLocaleString('id-ID');
+    }
+
+    window.hapusDariAntrean = function(index) {
+        antreanSetor.splice(index, 1);
+        updateAntreanUI();
+    };
+
+    document.getElementById('formPBB').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const namaPenyetor = document.getElementById('iNamaKolektif').value.trim();
+        const kadus = document.getElementById('iKadusVal').value;
+
+        if (!namaPenyetor) return alert("Nama penyetor/kolektif wajib diisi!");
+        if (antreanSetor.length === 0) return alert("Daftar NOP masih kosong! Masukkan minimal 1 NOP lalu klik 'Tambah NOP ke Daftar'.");
+
+        const skrg = new Date();
+        const tanggalStr = skrg.toLocaleDateString('id-ID') + " " + skrg.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+        let namaKoleksiLunas = "pbb_lunas_" + tahunAktif;
+
+        let totalSemuaTagihan = antreanSetor.reduce((sum, item) => sum + item.tagihan, 0);
+
+        const payloadKolektif = {
+            namaPenyetor: namaPenyetor,
             kadus: kadus,
-            tagihan: tagihanVal,
+            daftarNop: antreanSetor, // Menyimpan array NOP yang panjang secara utuh
+            tagihan: totalSemuaTagihan,
             tahun: String(tahunAktif),
-            tanggal: skrg.toLocaleDateString('id-ID') + " " + skrg.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})
+            tanggal: tanggalStr
         };
 
         try {
-            let namaKoleksiLunas = "pbb_lunas_" + tahunAktif;
-            await addDoc(collection(db, namaKoleksiLunas), payload);
-            alert(`Setoran ${payload.nama} (${payload.kadus}) Tahun ${tahunAktif} BERHASIL DISIMPAN!`);
+            await addDoc(collection(db, namaKoleksiLunas), payloadKolektif);
+            alert(`Pembayaran kolektif atas nama ${namaPenyetor} (${antreanSetor.length} NOP) BERHASIL DISIMPAN!`);
+            antreanSetor = [];
+            updateAntreanUI();
             document.getElementById('formPBB').reset();
             setKadusInput('Kadus 1');
-            document.getElementById('iNopAkhir').focus();
         } catch (err) {
             alert("Gagal menyimpan: " + err.message);
         }
@@ -550,18 +643,18 @@
 
         dataTampil.forEach(item => {
             let k = item.kadus || 'Kadus 1';
-            let n = item.nama || '';
-            let nop = item.nop || '';
+            let penyetor = item.namaPenyetor || item.nama || '';
+            let infoNop = item.daftarNop ? `${item.daftarNop.length} NOP Kolektif` : (item.nop || '');
 
             let matchKadus = (kadusFilter === 'semua') || (k.toLowerCase() === kadusFilter.toLowerCase());
-            let matchSearch = (n.toLowerCase().includes(keyword)) || (nop.includes(keyword));
+            let matchSearch = (penyetor.toLowerCase().includes(keyword)) || (infoNop.toLowerCase().includes(keyword));
 
             if (matchKadus && matchSearch) {
                 currentFilteredTotal += item.tagihan;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight:bold; color:var(--accent);">${item.nop}</td>
-                    <td>${item.nama}</td>
+                    <td style="font-weight:bold; color:var(--accent);">${infoNop}</td>
+                    <td>${penyetor}</td>
                     <td><span class="badge badge-kadus">${k}</span></td>
                     <td style="font-weight:bold;">Rp ${(item.tagihan || 0).toLocaleString('id-ID')}</td>
                     <td><span class="badge badge-lunas">✅ Setor (${item.tanggal || '-'})</span></td>
@@ -575,7 +668,7 @@
         });
 
         document.getElementById('statTotalSetor').innerText = "Rp " + totalSetorAll.toLocaleString('id-ID');
-        document.getElementById('statJumlahTransaksi').innerText = dataLunasLokal.length + " Warga Telah Setor";
+        document.getElementById('statJumlahTransaksi').innerText = dataLunasLokal.length + " Transaksi Masuk";
         document.getElementById('totalNominalTabel').innerText = "Total Ditampilkan: Rp " + currentFilteredTotal.toLocaleString('id-ID');
 
         let p1 = targetMasterK1 > 0 ? Math.min(100, Math.round((totalNominalKadus1 / targetMasterK1) * 100)) : 0;
@@ -583,12 +676,12 @@
 
         document.getElementById('persenKadus1').innerText = p1 + "%";
         document.getElementById('nominalKadus1').innerText = "Rp " + totalNominalKadus1.toLocaleString('id-ID');
-        document.getElementById('jumlahKadus1').innerText = countKadus1 + " Orang";
+        document.getElementById('jumlahKadus1').innerText = countKadus1 + " Transaksi";
         document.getElementById('barKadus1').style.width = p1 + "%";
 
         document.getElementById('persenKadus2').innerText = p2 + "%";
         document.getElementById('nominalKadus2').innerText = "Rp " + totalNominalKadus2.toLocaleString('id-ID');
-        document.getElementById('jumlahKadus2').innerText = countKadus2 + " Orang";
+        document.getElementById('jumlahKadus2').innerText = countKadus2 + " Transaksi";
         document.getElementById('barKadus2').style.width = p2 + "%";
 
         document.querySelectorAll('.btn-struk').forEach(btn => {
@@ -607,10 +700,29 @@
         if (!item) return;
         document.getElementById('rTahun').innerText = tahunAktif;
         document.getElementById('rTgl').innerText = item.tanggal;
-        document.getElementById('rNop').innerText = item.nop;
-        document.getElementById('rNama').innerText = item.nama;
+        document.getElementById('rPenyetor').innerText = item.namaPenyetor || item.nama;
         document.getElementById('rKadus').innerText = item.kadus;
         document.getElementById('rTotal').innerText = "Rp " + (item.tagihan || 0).toLocaleString('id-ID');
+
+        // Render daftar NOP secara memanjang di dalam struk
+        const containerNop = document.getElementById('rDaftarNopContainer');
+        containerNop.innerHTML = "";
+
+        if (item.daftarNop && Array.isArray(item.daftarNop)) {
+            item.daftarNop.forEach((n, idx) => {
+                containerNop.innerHTML += `
+                    <div>${idx + 1}. NOP: ${n.nop}</div>
+                    <div style="padding-left:10px; color:#333;">- ${n.nama} : Rp ${n.tagihan.toLocaleString('id-ID')}</div>
+                `;
+            });
+        } else {
+            // Kompatibilitas data lama jika bentuknya tunggal
+            containerNop.innerHTML = `
+                <div>1. NOP: ${item.nop}</div>
+                <div style="padding-left:10px;">- ${item.nama} : Rp ${(item.tagihan || 0).toLocaleString('id-ID')}</div>
+            `;
+        }
+
         document.getElementById('receiptModal').style.display = 'flex';
     }
 
@@ -618,12 +730,11 @@
         document.getElementById('receiptModal').style.display = 'none';
     });
 
-    // Fungsi Download Struk sebagai Gambar (PNG) untuk dikirim ke WhatsApp
     window.downloadStrukGambar = function() {
         const elemenStruk = document.getElementById('areaStruk');
         html2canvas(elemenStruk, { scale: 2 }).then(canvas => {
             const link = document.createElement('a');
-            link.download = `Struk_PBB_${document.getElementById('rNop').innerText}_${tahunAktif}.png`;
+            link.download = `Struk_Kolektif_${tahunAktif}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
@@ -645,10 +756,10 @@
         let dataExcel = dataLunasLokal.map((item, index) => ({
             "No": index + 1,
             "Tahun": tahunAktif,
-            "NOP": item.nop,
-            "Nama Wajib Pajak": item.nama,
+            "Nama Penyetor": item.namaPenyetor || item.nama,
+            "Jumlah NOP": item.daftarNop ? item.daftarNop.length : 1,
             "Kadus": item.kadus,
-            "Nominal (Rp)": item.tagihan,
+            "Total Nominal (Rp)": item.tagihan,
             "Tanggal Setor": item.tanggal
         }));
 
