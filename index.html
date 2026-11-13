@@ -94,21 +94,43 @@
         .modal-box { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 16px; width: 100%; max-width: 450px; box-sizing: border-box; position: relative; }
         .receipt-card { background: white; color: black; padding: 10px; border-radius: 8px; width: 270px; font-family: 'Courier New', Courier, monospace; font-size: 11px; box-sizing: border-box; }
 
+        /* PENGATURAN CETAK AGAR JADI 1 SHEET UTUH TANPA HALAMAN KOSONG */
         @media print {
-            @page { size: 58mm auto; margin: 0mm; }
-            body, html { width: 58mm; margin: 0 !important; padding: 0 !important; background: white !important; }
-            body * { visibility: hidden; }
-            #receiptModal, #receiptModal * { visibility: visible; }
+            @page { 
+                size: 58mm auto; 
+                margin: 0mm; 
+            }
+            body, html {
+                width: 58mm !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+            /* Hilangkan total elemen aplikasi utama agar tidak makan tempat halaman cetak */
+            #mainApp, #loginScreen, #modalMasterWarga, .no-print-modal { 
+                display: none !important; 
+            }
             #receiptModal { 
-                position: absolute !important; left: 0 !important; top: 0 !important; width: 58mm !important; 
-                background: white !important; padding: 0 !important; margin: 0 !important; display: flex !important;
-                justify-content: flex-start !important; align-items: flex-start !important;
+                position: static !important; 
+                width: 58mm !important; 
+                height: auto !important;
+                background: white !important; 
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
             }
             .receipt-card {
-                width: 56mm !important; max-width: 56mm !important; padding: 2mm !important; margin: 0 !important;
-                background: white !important; color: black !important; box-shadow: none !important; border: none !important;
+                width: 56mm !important;
+                max-width: 56mm !important;
+                height: auto !important;
+                padding: 2mm !important;
+                margin: 0 !important;
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+                border: none !important;
             }
-            .no-print-modal { display: none !important; }
         }
     </style>
 </head>
